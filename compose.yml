@@ -5,7 +5,7 @@ services:
     image: playsms/playsms:latest
     container_name: bulksms
     volumes:
-      - playsms:/var/www/html/config.php
+      - playsms:/var/www/html/config
       - /opt/mysql/lib:/var/lib/mysql
     ports:
       - 10000:80
@@ -13,5 +13,6 @@ services:
       - 13306:3306
       
 volumes:
-  playsms:
+  playsms: 
+   name: playsms_data
       
