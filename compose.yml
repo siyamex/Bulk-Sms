@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  playsms:
+    image: playsms/playsms:latest
+    container_name: bulksms
+    volumes:
+      - /data/playsms:/var/www/html/config.php
+      - /opt/mysql/lib:/var/lib/mysql
+    ports:
+      - 10000:80
+      - 2222:22
+      
