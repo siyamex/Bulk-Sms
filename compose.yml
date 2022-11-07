@@ -1,17 +1,26 @@
 version: '3'
 
 services:
-  playsms:
-    image: playsms/playsms:latest
-    container_name: bulksms
-    volumes:
-      - playsms:/var/www/html/config.php
-      - /opt/mysql/lib:/var/lib/mysql
+  playsms-server:
+    container_name: playsms-server
+    image: ghcr.io/robertzaage/playsms:master
+    environment:
+       - DBUSER=playsms
+       - DBPASS=playsms
+       - DBNAME=playsms
     ports:
-      - 10000:80
-      - 2222:22
-      
-volumes:
-  playsms: 
-   name: playsms_data
-      
+       - 10000:80
+    depends_on:
+       - playsms-database
+  playsms-database:
+   container_name: playsms-database
+   image: mariadb:latest
+   environment:
+       - MARIADB_DATABASE=playsms
+       - MARIADB_USER=playsms
+       - MARIADB_ROOT_PASSWORD=playsms
+       - MARIADB_PASSWORD=playsms
+   volumes:
+      - ~/playsms/database:/var/lib/mysql:rw
+   ports:
+      - 13306:3306
